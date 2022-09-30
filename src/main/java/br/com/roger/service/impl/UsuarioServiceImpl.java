@@ -1,12 +1,16 @@
 package br.com.roger.service.impl;
 
 
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.roger.exception.ErroAutenticacao;
+import br.com.roger.exception.RegraNegocioException;
 import br.com.roger.model.entity.Usuario;
 import br.com.roger.model.repository.UsuarioRepository;
 import br.com.roger.service.UsuarioService;
-import br.com.roger.service.exception.RegraNegocioException;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -21,14 +25,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	public Usuario autenticar(String email, String senha) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Usuario> usuario = repository.findByEmail(email);
+		if(usuario.isPresent()) {
+			throw new ErroAutenticacao("Usuario não encontrado para o email informado.");
+		}
+		if(!usuario.get().getSenha().equals(senha)) {
+			throw new ErroAutenticacao("Senha inválida");
+		}
+		return usuario.get();
 	}
 
 	@Override
+	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+		validarEmail(usuario.getEmail());
+		return repository.save(usuario);
 	}
 
 	@Override

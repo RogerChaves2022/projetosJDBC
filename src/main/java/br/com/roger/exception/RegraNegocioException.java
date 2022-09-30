@@ -1,4 +1,4 @@
-package br.com.roger.service.exception;
+package br.com.roger.exception;
 
 public class RegraNegocioException extends RuntimeException {
 	
