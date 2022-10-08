@@ -35,7 +35,7 @@ public class UsuarioServiceTest {
 		Assertions.assertDoesNotThrow(() -> {
 		//cenario
 		Mockito.doNothing().when(service).validarEmail(Mockito.anyString());
-		Usuario usuario = Usuario.builder().nome("roger").email("roger@gmail.com").senha("senha").build();
+		Usuario usuario = Usuario.builder().id(1L).nome("roger").email("roger@gmail.com").senha("senha").build();
 		Mockito.when(repository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 		//acao
 		Usuario usuarioSalvo = service.salvarUsuario(new Usuario());
@@ -45,6 +45,23 @@ public class UsuarioServiceTest {
 		org.assertj.core.api.Assertions.assertThat(usuarioSalvo.getNome()).isEqualTo("roger");
 		org.assertj.core.api.Assertions.assertThat(usuarioSalvo.getEmail()).isEqualTo("roger@gmail.com");
 		org.assertj.core.api.Assertions.assertThat(usuarioSalvo.getSenha()).isEqualTo("senha");
+		});
+	}
+	
+	@Test
+	public void naoDeveSalvarUmUsuarioComEmailJaCadastrado() {
+		Assertions.assertThrows(RegraNegocioException.class, () -> {
+		//cenario
+		String email = "usuario@gmail.com";
+		Usuario usuario = Usuario.builder().email(email).build();
+		Mockito.doThrow(RegraNegocioException.class).when(service).validarEmail(email);
+		
+		//acao
+		service.salvarUsuario(usuario);
+		
+		
+		//verificação
+		Mockito.verify(repository, Mockito.never()).save(usuario);
 		});
 	}
 	
