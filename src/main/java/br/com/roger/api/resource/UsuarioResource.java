@@ -23,6 +23,7 @@ public class UsuarioResource {
 		this.service = service;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticar( @RequestBody UsuarioDTO dto) {
 		try {
@@ -33,6 +34,7 @@ public class UsuarioResource {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody UsuarioDTO dto) {
 		Usuario usuario = Usuario.builder()
