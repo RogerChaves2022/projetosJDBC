@@ -1,6 +1,8 @@
 package br.com.roger.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.roger.model.entity.Lancamento;
 import br.com.roger.model.enums.StatusLancamento;
@@ -19,4 +21,7 @@ public interface LancamentoService {
 	
 	void validar(Lancamento lancamento);
 	
+	Optional<Lancamento> obterPorId(Long id);
+	
+	BigDecimal obterSaldoPorUsuario(Long id);
 }
