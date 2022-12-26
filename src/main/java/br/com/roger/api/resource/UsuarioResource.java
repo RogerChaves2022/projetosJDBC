@@ -27,7 +27,14 @@ public class UsuarioResource {
 	
 	private final UsuarioService service;
 	private final LancamentoService lancamentoService;
-
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping
+	public ResponseEntity teste() {
+		String teste = "Teste Realizado";
+		return ResponseEntity.ok(teste);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticar( @RequestBody UsuarioDTO dto) {
