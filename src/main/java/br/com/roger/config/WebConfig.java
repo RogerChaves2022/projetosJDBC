@@ -16,6 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedOriginPatterns("*")
         .allowedMethods("*")
         .allowedHeaders("*")
-        .allowedOrigins("*");
+        .allowedOrigins("https://minhas-financas-production.up.railway.app/*");
     }
 }
