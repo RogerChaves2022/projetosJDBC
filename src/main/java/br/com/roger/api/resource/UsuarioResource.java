@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import br.com.roger.service.LancamentoService;
 import br.com.roger.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin(origins = "https://minhas-financas-production.up.railway.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
