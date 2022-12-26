@@ -59,6 +59,7 @@ public class LancamentoResource {
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("{id}")
 	public ResponseEntity obterLancamento( @PathVariable("id") Long id) {
 			return service.obterPorId(id)
@@ -94,7 +95,7 @@ public class LancamentoResource {
 		new ResponseEntity("Lançamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST));
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@PutMapping("{id}/atualiza-status")
 	public ResponseEntity atualizarStatus(@PathVariable Long id, @RequestBody AtualizaStatusDTO dto) {
 		return service.obterPorId(id).map( entity -> {
