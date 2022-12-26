@@ -5,17 +5,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
 @EnableWebMvc
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        .allowCredentials(true)
-        .allowedOriginPatterns("*")
-        .allowedMethods("*")
-        .allowedHeaders("*")
-        .allowedOrigins("https://minhas-financas-production.up.railway.app/*");
+        .allowedMethods("GET","PUT","POST","DELETE","OPTIONS");
     }
 }

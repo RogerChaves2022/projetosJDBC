@@ -27,7 +27,6 @@ import br.com.roger.service.LancamentoService;
 import br.com.roger.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "https://minhas-financas-production.up.railway.app/*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/lancamentos")
 @RequiredArgsConstructor
