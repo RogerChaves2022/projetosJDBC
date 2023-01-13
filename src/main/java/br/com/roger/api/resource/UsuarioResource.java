@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,15 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.roger.api.dto.TokenDTO;
 import br.com.roger.api.dto.UsuarioDTO;
 import br.com.roger.exception.ErroAutenticacao;
 import br.com.roger.exception.RegraNegocioException;
 import br.com.roger.model.entity.Usuario;
+import br.com.roger.service.JwtService;
 import br.com.roger.service.LancamentoService;
 import br.com.roger.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class UsuarioResource {
 	
 	private final UsuarioService service;
 	private final LancamentoService lancamentoService;
+	private final JwtService jwtService;
 	
 	@SuppressWarnings("rawtypes")
 	@GetMapping
@@ -37,12 +38,13 @@ public class UsuarioResource {
 		return ResponseEntity.ok(teste);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/autenticar")
-	public ResponseEntity autenticar( @RequestBody UsuarioDTO dto) {
+	public ResponseEntity<?> autenticar( @RequestBody UsuarioDTO dto) {
 		try {
 			Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
-			return ResponseEntity.ok(usuarioAutenticado);
+			String token = jwtService.gerarToken(usuarioAutenticado);
+			TokenDTO tokenDTO = new TokenDTO(usuarioAutenticado.getNome(), token);
+			return ResponseEntity.ok(tokenDTO);
 		} catch (ErroAutenticacao e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
