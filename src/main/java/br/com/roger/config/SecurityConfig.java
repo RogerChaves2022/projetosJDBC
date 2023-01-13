@@ -83,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		CorsFilter corFilter = new CorsFilter(source);
 		FilterRegistrationBean<CorsFilter> filter = new FilterRegistrationBean<CorsFilter>(corFilter);
+
 		
 		filter.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		
